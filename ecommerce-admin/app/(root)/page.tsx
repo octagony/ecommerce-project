@@ -1,12 +1,16 @@
-'use client'
-import { Modal } from "@/components/ui/modal";
-import { UserButton } from "@clerk/nextjs";
+"use client";
+import { onClose, onOpen } from "@/store/features/modalSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 export default function SetupPage() {
-  return <div className='p-4'>
-    <Modal isOpen title="Test" onClose={()=>{}} description="Test desc">
-      Children
-    </Modal>
-  </div>;
+  const { isOpen } = useAppSelector((store) => store.modalReducer);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!isOpen) {
+      dispatch(onOpen());
+    }
+  }, [dispatch, isOpen]);
+  return <div className="p-4">Root Page</div>;
 }
- 
